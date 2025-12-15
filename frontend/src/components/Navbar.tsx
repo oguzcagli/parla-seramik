@@ -19,7 +19,6 @@ export const Navbar = () => {
         localStorage.setItem('language', newLang);
     };
 
-    // Close user menu when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
@@ -36,22 +35,22 @@ export const Navbar = () => {
                 <div className="flex justify-between items-center h-20 relative">
                     {/* Left Menu */}
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link to="/" className="text-gray-700 hover:text-primary transition">{t('nav.home')}</Link>
-                        <Link to="/about" className="text-gray-700 hover:text-primary transition">{t('nav.about')}</Link>
-                        <Link to="/products" className="text-gray-700 hover:text-primary transition">{t('nav.products')}</Link>
+                        <Link to="/" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.home')}</Link>
+                        <Link to="/about" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.about')}</Link>
+                        <Link to="/products" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.products')}</Link>
                     </div>
 
                     {/* Center Logo */}
-                    <Link to="/" className="flex items-center absolute left-1/2 transform -translate-x-1/2">
-                        <img src="/logo.png" alt="Parla Seramik" className="h-14" />
+                    <Link to="/" className="absolute left-1/2 transform -translate-x-1/2">
+                        <img src="/altlogo.png" alt="Parla Seramik" className="h-14" />
                     </Link>
 
                     {/* Right Menu */}
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link to="/contact" className="text-gray-700 hover:text-primary transition">{t('nav.contact')}</Link>
+                        <Link to="/contact" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.contact')}</Link>
 
                         {isAuthenticated && user?.role === 'ADMIN' && (
-                            <Link to="/admin" className="text-gray-700 hover:text-primary transition">{t('nav.admin')}</Link>
+                            <Link to="/admin" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.admin')}</Link>
                         )}
 
                         <button onClick={toggleLanguage} className="flex items-center text-gray-700 hover:text-primary transition">
@@ -108,7 +107,7 @@ export const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            <Link to="/login" className="text-gray-700 hover:text-primary transition">{t('nav.login')}</Link>
+                            <Link to="/login" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.login')}</Link>
                         )}
                     </div>
 
