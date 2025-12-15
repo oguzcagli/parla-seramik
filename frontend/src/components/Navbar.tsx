@@ -33,16 +33,21 @@ export const Navbar = () => {
     return (
         <nav className="bg-white shadow-md sticky top-0 z-50">
             <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center h-16">
-                    <Link to="/" className="text-2xl font-bold text-primary">
-                        Parla Seramik
-                    </Link>
-
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
+                <div className="flex justify-between items-center h-20 relative">
+                    {/* Left Menu */}
+                    <div className="hidden md:flex items-center space-x-6">
                         <Link to="/" className="text-gray-700 hover:text-primary transition">{t('nav.home')}</Link>
                         <Link to="/about" className="text-gray-700 hover:text-primary transition">{t('nav.about')}</Link>
                         <Link to="/products" className="text-gray-700 hover:text-primary transition">{t('nav.products')}</Link>
+                    </div>
+
+                    {/* Center Logo */}
+                    <Link to="/" className="flex items-center absolute left-1/2 transform -translate-x-1/2">
+                        <img src="/logo.png" alt="Parla Seramik" className="h-14" />
+                    </Link>
+
+                    {/* Right Menu */}
+                    <div className="hidden md:flex items-center space-x-6">
                         <Link to="/contact" className="text-gray-700 hover:text-primary transition">{t('nav.contact')}</Link>
 
                         {isAuthenticated && user?.role === 'ADMIN' && (
