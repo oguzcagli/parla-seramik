@@ -1,0 +1,131 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "products": "Products",
+        "contact": "Contact",
+        "cart": "Cart",
+        "login": "Login",
+        "logout": "Logout",
+        "admin": "Admin Panel"
+    },
+    "hero": {
+        "title": "Parla Seramik",
+        "subtitle": "Touch Your Life with Handmade Ceramic Products",
+        "description": "Discover our special ceramic collection where traditional craftsmanship meets modern design",
+        "contactBtn": "Contact",
+        "productsBtn": "Our Products"
+    },
+    "home": {
+        "newProducts": "New Products",
+        "whyUs": "Why Choose Us?",
+        "quality": "Quality Products",
+        "qualityDesc": "Each product is made from carefully selected materials",
+        "handmade": "Handmade",
+        "handmadeDesc": "Unique designs carefully crafted by our artisans",
+        "fastShipping": "Fast Shipping",
+        "fastShippingDesc": "Your orders are carefully packaged and shipped quickly",
+        "support": "Customer Support",
+        "supportDesc": "We're here for you with 24/7 customer service"
+    },
+    "products": {
+        "title": "Our Products",
+        "search": "Search products...",
+        "filter": "Filter",
+        "allCategories": "All Categories",
+        "sortBy": "Sort By",
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "priceAsc": "Price (Low-High)",
+        "priceDesc": "Price (High-Low)",
+        "addToCart": "Add to Cart",
+        "outOfStock": "Out of Stock",
+        "viewDetails": "View Details",
+        "noProducts": "No products found"
+    },
+    "about": {
+        "title": "About Us",
+        "story": "Our Story",
+        "storyText": "Parla Seramik, founded in 2020, is a brand that combines traditional ceramic art with modern design. Each of our products is crafted from carefully selected materials, shaped by our artisans with years of experience.",
+        "mission": "Our Mission",
+        "missionText": "To add value to your homes and workplaces by producing quality, aesthetic and functional ceramic products. We bring together art and quality in each of our products.",
+        "values": "Our Values",
+        "valuesText": "Quality, originality, customer satisfaction and sustainability are our core values. Each of our products reflects these values."
+    },
+    "contact": {
+        "title": "Contact",
+        "getInTouch": "Get In Touch",
+        "name": "Your Name",
+        "email": "Email",
+        "phone": "Phone",
+        "message": "Your Message",
+        "send": "Send",
+        "address": "Address",
+        "addressText": "Istanbul, Turkey"
+    },
+    "cart": {
+        "title": "My Cart",
+        "empty": "Your cart is empty",
+        "continueShopping": "Continue Shopping",
+        "total": "Total",
+        "checkout": "Checkout",
+        "remove": "Remove",
+        "quantity": "Quantity"
+    },
+    "auth": {
+        "login": "Login",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phone": "Phone",
+        "noAccount": "Don't have an account?",
+        "hasAccount": "Already have an account?",
+        "loginSuccess": "Login successful",
+        "registerSuccess": "Registration successful"
+    },
+    "admin": {
+        "dashboard": "Admin Dashboard",
+        "products": "Product Management",
+        "categories": "Category Management",
+        "orders": "Order Management",
+        "reviews": "Review Management",
+        "addProduct": "Add Product",
+        "editProduct": "Edit Product",
+        "deleteProduct": "Delete Product",
+        "addCategory": "Add Category",
+        "editCategory": "Edit Category",
+        "deleteCategory": "Delete Category",
+        "approveReview": "Approve Review",
+        "deleteReview": "Delete Review",
+        "updateStatus": "Update Status"
+    },
+    "profile": {
+        "title": "My Profile",
+        "info": "Profile Information",
+        "changePassword": "Change Password",
+        "myOrders": "My Orders",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password"
+    },
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "search": "Search",
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "success": "Operation successful",
+        "confirm": "Confirm",
+        "price": "Price",
+        "stock": "Stock",
+        "category": "Category",
+        "description": "Description",
+        "name": "Name",
+        "actions": "Actions"
+    }
+}

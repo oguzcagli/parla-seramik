@@ -1,0 +1,131 @@
+{
+    "nav": {
+        "home": "Ana Sayfa",
+        "about": "Hakkımızda",
+        "products": "Ürünler",
+        "contact": "İletişim",
+        "cart": "Sepet",
+        "login": "Giriş Yap",
+        "logout": "Çıkış Yap",
+        "admin": "Admin Panel"
+    },
+    "hero": {
+        "title": "Parla Seramik",
+        "subtitle": "El Yapımı Seramik Ürünlerle Hayatınıza Dokunuş",
+        "description": "Geleneksel ustalık ve modern tasarımın buluştuğu özel seramik koleksiyonumuzla tanışın",
+        "contactBtn": "İletişim",
+        "productsBtn": "Ürünlerimiz"
+    },
+    "home": {
+        "newProducts": "Yeni Ürünler",
+        "whyUs": "Neden Bizi Tercih Etmelisiniz?",
+        "quality": "Kaliteli Ürünler",
+        "qualityDesc": "Her ürünümüz özenle seçilmiş malzemelerden üretilir",
+        "handmade": "El Yapımı",
+        "handmadeDesc": "Ustalarımız tarafından özenle hazırlanan benzersiz tasarımlar",
+        "fastShipping": "Hızlı Kargo",
+        "fastShippingDesc": "Siparişleriniz özenle paketlenir ve hızlıca gönderilir",
+        "support": "Müşteri Desteği",
+        "supportDesc": "7/24 müşteri hizmetleri ile yanınızdayız"
+    },
+    "products": {
+        "title": "Ürünlerimiz",
+        "search": "Ürün ara...",
+        "filter": "Filtrele",
+        "allCategories": "Tüm Kategoriler",
+        "sortBy": "Sırala",
+        "newest": "En Yeni",
+        "oldest": "En Eski",
+        "priceAsc": "Fiyat (Düşük-Yüksek)",
+        "priceDesc": "Fiyat (Yüksek-Düşük)",
+        "addToCart": "Sepete Ekle",
+        "outOfStock": "Stokta Yok",
+        "viewDetails": "Detayları Gör",
+        "noProducts": "Ürün bulunamadı"
+    },
+    "about": {
+        "title": "Hakkımızda",
+        "story": "Hikayemiz",
+        "storyText": "Parla Seramik, 2020 yılında kurulmuş, geleneksel seramik sanatını modern tasarımla buluşturan bir markadır. Her ürünümüz, ustalarımızın yılların deneyimiyle şekillendirdiği, özenle seçilmiş malzemelerden üretilir.",
+        "mission": "Misyonumuz",
+        "missionText": "Kaliteli, estetik ve fonksiyonel seramik ürünler üreterek, evlerinize ve işyerlerinize değer katmak. Her ürünümüzde sanatı ve kaliteyi bir araya getiriyoruz.",
+        "values": "Değerlerimiz",
+        "valuesText": "Kalite, özgünlük, müşteri memnuniyeti ve sürdürülebilirlik temel değerlerimizdir. Her ürünümüz bu değerleri yansıtır."
+    },
+    "contact": {
+        "title": "İletişim",
+        "getInTouch": "Bizimle İletişime Geçin",
+        "name": "Adınız",
+        "email": "E-posta",
+        "phone": "Telefon",
+        "message": "Mesajınız",
+        "send": "Gönder",
+        "address": "Adres",
+        "addressText": "İstanbul, Türkiye"
+    },
+    "cart": {
+        "title": "Sepetim",
+        "empty": "Sepetiniz boş",
+        "continueShopping": "Alışverişe Devam Et",
+        "total": "Toplam",
+        "checkout": "Ödeme Yap",
+        "remove": "Kaldır",
+        "quantity": "Adet"
+    },
+    "auth": {
+        "login": "Giriş Yap",
+        "register": "Kayıt Ol",
+        "email": "E-posta",
+        "password": "Şifre",
+        "firstName": "Ad",
+        "lastName": "Soyad",
+        "phone": "Telefon",
+        "noAccount": "Hesabınız yok mu?",
+        "hasAccount": "Zaten hesabınız var mı?",
+        "loginSuccess": "Giriş başarılı",
+        "registerSuccess": "Kayıt başarılı"
+    },
+    "admin": {
+        "dashboard": "Yönetim Paneli",
+        "products": "Ürün Yönetimi",
+        "categories": "Kategori Yönetimi",
+        "orders": "Sipariş Yönetimi",
+        "reviews": "Yorum Yönetimi",
+        "addProduct": "Ürün Ekle",
+        "editProduct": "Ürün Düzenle",
+        "deleteProduct": "Ürün Sil",
+        "addCategory": "Kategori Ekle",
+        "editCategory": "Kategori Düzenle",
+        "deleteCategory": "Kategori Sil",
+        "approveReview": "Yorumu Onayla",
+        "deleteReview": "Yorumu Sil",
+        "updateStatus": "Durumu Güncelle"
+    },
+    "profile": {
+        "title": "Profilim",
+        "info": "Profil Bilgileri",
+        "changePassword": "Şifre Değiştir",
+        "myOrders": "Siparişlerim",
+        "currentPassword": "Mevcut Şifre",
+        "newPassword": "Yeni Şifre",
+        "confirmPassword": "Şifre Tekrar"
+    },
+    "common": {
+        "save": "Kaydet",
+        "cancel": "İptal",
+        "delete": "Sil",
+        "edit": "Düzenle",
+        "add": "Ekle",
+        "search": "Ara",
+        "loading": "Yükleniyor...",
+        "error": "Bir hata oluştu",
+        "success": "İşlem başarılı",
+        "confirm": "Onayla",
+        "price": "Fiyat",
+        "stock": "Stok",
+        "category": "Kategori",
+        "description": "Açıklama",
+        "name": "İsim",
+        "actions": "İşlemler"
+    }
+}

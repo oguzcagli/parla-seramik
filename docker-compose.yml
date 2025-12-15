@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: parla-seramik-postgres
+    environment:
+      POSTGRES_DB: parla_seramik
+      POSTGRES_USER: parla_admin
+      POSTGRES_PASSWORD: parla_2024_secure
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - parla-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: parla-seramik-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - parla-network
+    command: redis-server --appendonly yes
+
+volumes:
+  postgres_data:
+  redis_data:
+
+
+networks:
+  parla-network:
+    driver: bridge
