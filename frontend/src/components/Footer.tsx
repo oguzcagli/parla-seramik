@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, Instagram } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
@@ -47,22 +47,24 @@ export const Footer = () => {
                         <ul className="space-y-3">
                             <li className="flex items-center text-gray-600">
                                 <Mail className="w-5 h-5 mr-2 text-primary" />
-                                info@parlaseramik.com
+                                parlaseramik.nh@gmail.com
                             </li>
                             <li className="flex items-center text-gray-600">
                                 <Phone className="w-5 h-5 mr-2 text-primary" />
-                                +90 555 123 45 67
+                                +90 544 361 73 09
                             </li>
                             <li className="flex items-center text-gray-600">
-                                <MapPin className="w-5 h-5 mr-2 text-primary" />
-                                {t('contact.addressText')}
+                                <Instagram className="w-5 h-5 mr-2 text-primary" />
+                                <a href="https://instagram.com/parla.seramik" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition">
+                                    parla.seramik
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="border-t border-gray-300 mt-8 pt-8 text-center text-gray-600">
-                    <p>&copy; 2024 Parla Seramik. {t('footer.copyright')}</p>
+                    <p>&copy; 2025 Parla Seramik. {t('footer.copyright')}</p>
                 </div>
             </div>
         </footer>
