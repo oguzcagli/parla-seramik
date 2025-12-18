@@ -56,19 +56,19 @@ export const ProductDetail = () => {
         if (product?.shopierLink) {
             window.open(product.shopierLink, '_blank');
         } else {
-            toast.error('Bu ürün için satın alma linki henüz eklenmemiş');
+            toast.error(t('productDetail.noShopierLink'));
         }
     };
 
     const handleSubmitReview = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!isAuthenticated) {
-            toast.error('Yorum yapmak için giriş yapmalısınız');
+            toast.error(t('productDetail.loginToReview'));
             navigate('/login');
             return;
         }
         if (!reviewForm.comment.trim()) {
-            toast.error('Lütfen bir yorum yazın');
+            toast.error(t('productDetail.yourComment'));
             return;
         }
         setSubmittingReview(true);
@@ -78,11 +78,11 @@ export const ProductDetail = () => {
                 rating: reviewForm.rating,
                 comment: reviewForm.comment,
             });
-            toast.success('Yorumunuz gönderildi. Onaylandıktan sonra yayınlanacak.');
+            toast.success(t('common.success'));
             setReviewForm({ rating: 5, comment: '' });
             setShowReviewForm(false);
         } catch (error: any) {
-            toast.error(error.response?.data?.message || 'Yorum gönderilemedi');
+            toast.error(error.response?.data?.message || t('common.error'));
         } finally {
             setSubmittingReview(false);
         }
@@ -99,7 +99,7 @@ export const ProductDetail = () => {
     if (!product) {
         return (
             <div className="container mx-auto px-4 py-12 text-center">
-                <p>Ürün bulunamadı</p>
+                <p>{t('productDetail.productNotFound')}</p>
             </div>
         );
     }
@@ -111,7 +111,7 @@ export const ProductDetail = () => {
                 className="flex items-center gap-2 text-gray-600 hover:text-primary mb-8"
             >
                 <ArrowLeft className="w-5 h-5" />
-                Geri Dön
+                {t('productDetail.goBack')}
             </button>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -130,8 +130,7 @@ export const ProductDetail = () => {
                                 <button
                                     key={index}
                                     onClick={() => setSelectedImage(index)}
-                                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === index ? 'border-primary' : 'border-transparent'
-                                        }`}
+                                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === index ? 'border-primary' : 'border-transparent'}`}
                                 >
                                     <img src={img} alt="" className="w-full h-full object-cover" />
                                 </button>
@@ -150,11 +149,11 @@ export const ProductDetail = () => {
                         <div className="flex items-center">
                             <Star className="w-5 h-5 text-yellow-400 fill-current" />
                             <span className="ml-1 font-medium">{product.averageRating.toFixed(1)}</span>
-                            <span className="text-gray-500 ml-1">({product.reviewCount} değerlendirme)</span>
+                            <span className="text-gray-500 ml-1">({product.reviewCount} {t('productDetail.reviews')})</span>
                         </div>
                         <span className="text-gray-300">|</span>
                         <span className={product.stock > 0 ? 'text-green-600' : 'text-red-600'}>
-                            {product.stock > 0 ? `${product.stock} adet stokta` : 'Stokta yok'}
+                            {product.stock > 0 ? `${product.stock} ${t('productDetail.inStock')}` : t('productDetail.outOfStock')}
                         </span>
                     </div>
 
@@ -175,17 +174,17 @@ export const ProductDetail = () => {
                             }`}
                     >
                         <ExternalLink className="w-6 h-6" />
-                        {product.shopierLink ? 'Satın Al' : 'Yakında Satışta'}
+                        {product.shopierLink ? t('productDetail.buyNow') : t('productDetail.comingSoon')}
                     </button>
                     {product.shopierLink && (
                         <p className="text-center text-sm text-gray-500 mt-2">
-                            Shopier üzerinden güvenli ödeme
+                            {t('productDetail.securePayment')}
                         </p>
                     )}
 
                     <div className="mt-8 pt-8 border-t">
                         <p className="text-gray-600">
-                            <span className="font-medium">Kategori:</span>{' '}
+                            <span className="font-medium">{t('productDetail.category')}:</span>{' '}
                             {i18n.language === 'tr' ? product.categoryNameTr : product.categoryNameEn}
                         </p>
                     </div>
@@ -197,7 +196,7 @@ export const ProductDetail = () => {
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl font-bold flex items-center gap-2">
                         <MessageSquare className="w-6 h-6" />
-                        Müşteri Yorumları ({reviews.length})
+                        {t('productDetail.customerReviews')} ({reviews.length})
                     </h2>
                     {isAuthenticated && (
                         <button
@@ -205,7 +204,7 @@ export const ProductDetail = () => {
                             className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition"
                         >
                             <Send className="w-4 h-4" />
-                            Yorum Yap
+                            {t('productDetail.writeReview')}
                         </button>
                     )}
                 </div>
@@ -213,9 +212,9 @@ export const ProductDetail = () => {
                 {/* Review Form */}
                 {showReviewForm && (
                     <form onSubmit={handleSubmitReview} className="bg-gray-50 rounded-lg p-6 mb-8">
-                        <h3 className="font-semibold mb-4">Yorum Yaz</h3>
+                        <h3 className="font-semibold mb-4">{t('productDetail.writeReview')}</h3>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-2">Puanınız</label>
+                            <label className="block text-sm font-medium mb-2">{t('productDetail.yourRating')}</label>
                             <div className="flex gap-1">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <button
@@ -235,13 +234,13 @@ export const ProductDetail = () => {
                             </div>
                         </div>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-2">Yorumunuz</label>
+                            <label className="block text-sm font-medium mb-2">{t('productDetail.yourComment')}</label>
                             <textarea
                                 value={reviewForm.comment}
                                 onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
                                 rows={4}
-                                placeholder="Bu ürün hakkında düşüncelerinizi paylaşın..."
+                                placeholder={t('productDetail.commentPlaceholder')}
                                 required
                             />
                         </div>
@@ -251,14 +250,14 @@ export const ProductDetail = () => {
                                 onClick={() => setShowReviewForm(false)}
                                 className="px-4 py-2 border rounded-lg hover:bg-gray-100"
                             >
-                                İptal
+                                {t('productDetail.cancel')}
                             </button>
                             <button
                                 type="submit"
                                 disabled={submittingReview}
                                 className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50"
                             >
-                                {submittingReview ? 'Gönderiliyor...' : 'Gönder'}
+                                {submittingReview ? t('productDetail.submitting') : t('productDetail.submit')}
                             </button>
                         </div>
                     </form>
@@ -268,13 +267,13 @@ export const ProductDetail = () => {
                 {reviews.length === 0 ? (
                     <div className="text-center py-12 bg-gray-50 rounded-lg">
                         <MessageSquare className="w-12 h-12 mx-auto text-gray-300 mb-4" />
-                        <p className="text-gray-500">Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+                        <p className="text-gray-500">{t('productDetail.noReviews')}</p>
                         {!isAuthenticated && (
                             <button
                                 onClick={() => navigate('/login')}
                                 className="mt-4 text-primary hover:underline"
                             >
-                                Yorum yapmak için giriş yapın
+                                {t('productDetail.loginToReview')}
                             </button>
                         )}
                     </div>
@@ -298,7 +297,7 @@ export const ProductDetail = () => {
                                         </div>
                                     </div>
                                     <span className="text-sm text-gray-500">
-                                        {new Date(review.createdAt).toLocaleDateString('tr-TR')}
+                                        {new Date(review.createdAt).toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US')}
                                     </span>
                                 </div>
                                 <p className="text-gray-700">{review.comment}</p>

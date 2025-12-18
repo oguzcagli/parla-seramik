@@ -9,6 +9,32 @@
         "logout": "Logout",
         "admin": "Admin Panel"
     },
+    "productDetail": {
+        "goBack": "Go Back",
+        "reviews": "reviews",
+        "inStock": "in stock",
+        "outOfStock": "Out of Stock",
+        "buyNow": "Buy Now",
+        "comingSoon": "Coming Soon",
+        "securePayment": "Secure payment via Shopier",
+        "category": "Category",
+        "customerReviews": "Customer Reviews",
+        "writeReview": "Write Review",
+        "yourRating": "Your Rating",
+        "yourComment": "Your Comment",
+        "commentPlaceholder": "Share your thoughts about this product...",
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "submitting": "Submitting...",
+        "noReviews": "No reviews yet. Be the first to review!",
+        "loginToReview": "Login to write a review",
+        "productNotFound": "Product not found",
+        "noShopierLink": "Purchase link not available yet"
+    },
+    "footer": {
+        "description": "Discover our special ceramic collection where traditional craftsmanship meets modern design",
+        "copyright": "All rights reserved."
+    },
     "hero": {
         "title": "Parla Seramik",
         "subtitle": "Touch Your Life with Handmade Ceramic Products",

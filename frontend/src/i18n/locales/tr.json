@@ -9,6 +9,32 @@
         "logout": "Çıkış Yap",
         "admin": "Admin Panel"
     },
+    "productDetail": {
+        "goBack": "Geri Dön",
+        "reviews": "değerlendirme",
+        "inStock": "adet stokta",
+        "outOfStock": "Stokta Yok",
+        "buyNow": "Satın Al",
+        "comingSoon": "Yakında Satışta",
+        "securePayment": "Shopier üzerinden güvenli ödeme",
+        "category": "Kategori",
+        "customerReviews": "Müşteri Yorumları",
+        "writeReview": "Yorum Yap",
+        "yourRating": "Puanınız",
+        "yourComment": "Yorumunuz",
+        "commentPlaceholder": "Bu ürün hakkında düşüncelerinizi paylaşın...",
+        "cancel": "İptal",
+        "submit": "Gönder",
+        "submitting": "Gönderiliyor...",
+        "noReviews": "Henüz yorum yapılmamış. İlk yorumu siz yapın!",
+        "loginToReview": "Yorum yapmak için giriş yapın",
+        "productNotFound": "Ürün bulunamadı",
+        "noShopierLink": "Bu ürün için satın alma linki henüz eklenmemiş"
+    },
+    "footer": {
+        "description": "Geleneksel ustalık ve modern tasarımın buluştuğu özel seramik koleksiyonumuzla tanışın",
+        "copyright": "Tüm hakları saklıdır."
+    },
     "hero": {
         "title": "Parla Seramik",
         "subtitle": "El Yapımı Seramik Ürünlerle Hayatınıza Dokunuş",
