@@ -56,7 +56,7 @@ export const Navbar = () => {
                             {i18n.language.toUpperCase()}
                         </button>
 
-                        {isAuthenticated && (
+                        {isAuthenticated ? (
                             <div className="relative" ref={userMenuRef}>
                                 <button
                                     onClick={() => setShowUserMenu(!showUserMenu)}
@@ -95,6 +95,8 @@ export const Navbar = () => {
                                     </div>
                                 )}
                             </div>
+                        ) : (
+                            <Link to="/login" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.login')}</Link>
                         )}
                     </div>
 
@@ -117,12 +119,14 @@ export const Navbar = () => {
                         <button onClick={() => { toggleLanguage(); setIsOpen(false); }} className="block text-gray-700 hover:text-primary transition">
                             <Globe className="w-5 h-5 inline mr-2" />{i18n.language.toUpperCase()}
                         </button>
-                        {isAuthenticated && (
+                        {isAuthenticated ? (
                             <>
                                 <Link to="/profile" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('profile.title')}</Link>
                                 <Link to="/orders" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('profile.myOrders')}</Link>
                                 <button onClick={() => { logout(); setIsOpen(false); }} className="block text-red-600 hover:text-red-700 transition">{t('nav.logout')}</button>
                             </>
+                        ) : (
+                            <Link to="/login" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('nav.login')}</Link>
                         )}
                     </div>
                 )}

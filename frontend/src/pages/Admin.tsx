@@ -45,8 +45,12 @@ export const Admin = () => {
                 orderService.getAll().catch(() => ({ content: [] })),
                 reviewService.getAll().catch(() => ({ content: [] })),
             ]);
-            setProducts(productsData.content || []);
-            setCategories(categoriesData || []);
+            // Sadece aktif ürünleri göster
+            const activeProducts = (productsData.content || []).filter((p: any) => p.active !== false);
+            // Sadece aktif kategorileri göster
+            const activeCategories = (categoriesData || []).filter((c: any) => c.active !== false);
+            setProducts(activeProducts);
+            setCategories(activeCategories);
             setOrders(ordersData.content || ordersData || []);
             setReviews(reviewsData.content || reviewsData || []);
         } catch (error) {
