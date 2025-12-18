@@ -27,7 +27,7 @@ export const Admin = () => {
 
     const [productForm, setProductForm] = useState({
         nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '',
-        price: '', stock: '', categoryId: '', images: '', featured: false,
+        price: '', stock: '', categoryId: '', images: '', featured: false, shopierLink: '',
     });
 
     const [categoryForm, setCategoryForm] = useState({
@@ -122,7 +122,7 @@ export const Admin = () => {
     };
 
     const resetProductForm = () => {
-        setProductForm({ nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '', price: '', stock: '', categoryId: '', images: '', featured: false });
+        setProductForm({ nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '', price: '', stock: '', categoryId: '', images: '', featured: false, shopierLink: '' });
         setEditingProduct(null);
     };
 
@@ -139,7 +139,7 @@ export const Admin = () => {
                 descriptionTr: product.descriptionTr || '', descriptionEn: product.descriptionEn || '',
                 price: product.price.toString(), stock: product.stock.toString(),
                 categoryId: product.categoryId?.toString() || '', images: product.images?.join(', ') || '',
-                featured: product.featured,
+                featured: product.featured, shopierLink: product.shopierLink || '',
             });
         } else { resetProductForm(); }
         setShowProductModal(true);
@@ -166,6 +166,7 @@ export const Admin = () => {
                 categoryId: parseInt(productForm.categoryId),
                 images: productForm.images.split(',').map(img => img.trim()).filter(img => img),
                 featured: productForm.featured,
+                shopierLink: productForm.shopierLink || undefined,
             };
             if (editingProduct) {
                 await productService.update(editingProduct.id, data);
@@ -476,6 +477,11 @@ export const Admin = () => {
                             <div>
                                 <label className="block text-sm font-medium mb-1">Resim URL'leri (virgülle ayırın)</label>
                                 <input type="text" value={productForm.images} onChange={(e) => setProductForm({ ...productForm, images: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Shopier Ürün Linki</label>
+                                <input type="url" value={productForm.shopierLink} onChange={(e) => setProductForm({ ...productForm, shopierLink: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" placeholder="https://www.shopier.com/..." />
+                                <p className="text-xs text-gray-500 mt-1">Kullanıcı "Satın Al" butonuna tıkladığında bu linke yönlendirilecek</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 <input type="checkbox" id="featured" checked={productForm.featured} onChange={(e) => setProductForm({ ...productForm, featured: e.target.checked })} className="w-4 h-4" />

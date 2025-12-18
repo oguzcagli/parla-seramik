@@ -41,4 +41,6 @@ public class CreateProductRequest {
     private Long categoryId;
     
     private Boolean featured = false;
+    
+    private String shopierLink;
 }

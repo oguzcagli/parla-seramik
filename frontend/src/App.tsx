@@ -7,10 +7,10 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Products } from './pages/Products';
 import { Contact } from './pages/Contact';
-import { Cart } from './pages/Cart';
+// import { Cart } from './pages/Cart'; // Shopier entegrasyonu için gizlendi
 import { Login } from './pages/Login';
 import { Admin } from './pages/Admin';
-import { Checkout } from './pages/Checkout';
+// import { Checkout } from './pages/Checkout'; // Shopier entegrasyonu için gizlendi
 import { ProductDetail } from './pages/ProductDetail';
 import { Profile } from './pages/Profile';
 import { Orders } from './pages/Orders';
@@ -48,8 +48,9 @@ function App() {
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/:id" element={<ProductDetail />} />
                         <Route path="/contact" element={<Contact />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/checkout" element={<Checkout />} />
+                        {/* Shopier entegrasyonu için gizlendi */}
+                        {/* <Route path="/cart" element={<Cart />} /> */}
+                        {/* <Route path="/checkout" element={<Checkout />} /> */}
                         <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                         <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />

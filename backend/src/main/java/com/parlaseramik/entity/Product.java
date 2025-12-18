@@ -60,4 +60,7 @@ public class Product extends BaseEntity {
 
     @Builder.Default
     private Integer reviewCount = 0;
+
+    @Column(length = 500)
+    private String shopierLink;
 }

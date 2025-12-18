@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Globe, User, Package, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe, User, Package, LogOut, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
-import { useCartStore } from '@/store/cartStore';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +10,6 @@ export const Navbar = () => {
     const userMenuRef = useRef<HTMLDivElement>(null);
     const { t, i18n } = useTranslation();
     const { user, isAuthenticated, logout } = useAuthStore();
-    const totalItems = useCartStore((state) => state.getTotalItems());
 
     const toggleLanguage = () => {
         const newLang = i18n.language === 'tr' ? 'en' : 'tr';
@@ -30,14 +28,13 @@ export const Navbar = () => {
     }, []);
 
     return (
-        <nav className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-20 relative">
                     {/* Left Menu */}
                     <div className="hidden md:flex items-center space-x-6">
                         <Link to="/" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.home')}</Link>
                         <Link to="/about" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.about')}</Link>
-                        <Link to="/products" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.products')}</Link>
                     </div>
 
                     {/* Center Logo */}
@@ -47,6 +44,7 @@ export const Navbar = () => {
 
                     {/* Right Menu */}
                     <div className="hidden md:flex items-center space-x-6">
+                        <Link to="/products" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.products')}</Link>
                         <Link to="/contact" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.contact')}</Link>
 
                         {isAuthenticated && user?.role === 'ADMIN' && (
@@ -58,16 +56,7 @@ export const Navbar = () => {
                             {i18n.language.toUpperCase()}
                         </button>
 
-                        <Link to="/cart" className="relative text-gray-700 hover:text-primary transition">
-                            <ShoppingCart className="w-6 h-6" />
-                            {totalItems > 0 && (
-                                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                                    {totalItems}
-                                </span>
-                            )}
-                        </Link>
-
-                        {isAuthenticated ? (
+                        {isAuthenticated && (
                             <div className="relative" ref={userMenuRef}>
                                 <button
                                     onClick={() => setShowUserMenu(!showUserMenu)}
@@ -106,8 +95,6 @@ export const Navbar = () => {
                                     </div>
                                 )}
                             </div>
-                        ) : (
-                            <Link to="/login" className="text-gray-700 hover:text-primary transition font-medium">{t('nav.login')}</Link>
                         )}
                     </div>
 
@@ -130,15 +117,12 @@ export const Navbar = () => {
                         <button onClick={() => { toggleLanguage(); setIsOpen(false); }} className="block text-gray-700 hover:text-primary transition">
                             <Globe className="w-5 h-5 inline mr-2" />{i18n.language.toUpperCase()}
                         </button>
-                        <Link to="/cart" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('nav.cart')} ({totalItems})</Link>
-                        {isAuthenticated ? (
+                        {isAuthenticated && (
                             <>
                                 <Link to="/profile" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('profile.title')}</Link>
                                 <Link to="/orders" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('profile.myOrders')}</Link>
                                 <button onClick={() => { logout(); setIsOpen(false); }} className="block text-red-600 hover:text-red-700 transition">{t('nav.logout')}</button>
                             </>
-                        ) : (
-                            <Link to="/login" className="block text-gray-700 hover:text-primary transition" onClick={() => setIsOpen(false)}>{t('nav.login')}</Link>
                         )}
                     </div>
                 )}

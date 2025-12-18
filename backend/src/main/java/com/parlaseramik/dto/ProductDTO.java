@@ -29,6 +29,7 @@ public class ProductDTO {
     private Boolean featured;
     private Double averageRating;
     private Integer reviewCount;
+    private String shopierLink;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

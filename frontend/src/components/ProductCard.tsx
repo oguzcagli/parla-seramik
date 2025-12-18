@@ -1,26 +1,15 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Star } from 'lucide-react';
+import { Star, ExternalLink } from 'lucide-react';
 import { Product } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { formatPrice, getProductName } from '@/utils/helpers';
-import { useCartStore } from '@/store/cartStore';
-import toast from 'react-hot-toast';
 
 interface ProductCardProps {
     product: Product;
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-    const { t, i18n } = useTranslation();
-    const addItem = useCartStore((state) => state.addItem);
-
-    const handleAddToCart = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (product.stock > 0) {
-            addItem(product);
-            toast.success(t('products.addToCart'));
-        }
-    };
+    const { i18n } = useTranslation();
 
     return (
         <Link
@@ -44,6 +33,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                         Featured
                     </span>
                 )}
+                {product.shopierLink && (
+                    <span className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                        <ExternalLink className="w-3 h-3" />
+                        Satışta
+                    </span>
+                )}
             </div>
 
             <div className="p-4">
@@ -62,22 +57,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                     <span className="text-xl font-bold text-primary">
                         {formatPrice(product.price)}
                     </span>
-
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={product.stock === 0}
-                        className={`p-2 rounded-full transition ${product.stock > 0
-                                ? 'bg-primary text-white hover:bg-primary-dark'
-                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                            }`}
-                    >
-                        <ShoppingCart className="w-5 h-5" />
-                    </button>
+                    <span className="text-sm text-primary font-medium group-hover:underline">
+                        Detaylar →
+                    </span>
                 </div>
-
-                {product.stock === 0 && (
-                    <p className="text-red-500 text-sm mt-2">{t('products.outOfStock')}</p>
-                )}
             </div>
         </Link>
     );

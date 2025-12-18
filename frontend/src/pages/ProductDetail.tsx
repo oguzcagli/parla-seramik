@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShoppingCart, Star, Minus, Plus, ArrowLeft, MessageSquare, Send } from 'lucide-react';
+import { ExternalLink, Star, ArrowLeft, MessageSquare, Send } from 'lucide-react';
 import { productService } from '@/services/productService';
 import { reviewService } from '@/services/reviewService';
 import { Product, Review } from '@/types';
 import { formatPrice, getProductName, getProductDescription } from '@/utils/helpers';
-import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
 import toast from 'react-hot-toast';
 
@@ -17,9 +16,7 @@ export const ProductDetail = () => {
     const [product, setProduct] = useState<Product | null>(null);
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
-    const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(0);
-    const addItem = useCartStore((state) => state.addItem);
     const { isAuthenticated } = useAuthStore();
 
     // Review form
@@ -55,10 +52,11 @@ export const ProductDetail = () => {
         }
     };
 
-    const handleAddToCart = () => {
-        if (product && product.stock > 0) {
-            addItem(product, quantity);
-            toast.success(`${quantity} adet ürün sepete eklendi`);
+    const handleBuyNow = () => {
+        if (product?.shopierLink) {
+            window.open(product.shopierLink, '_blank');
+        } else {
+            toast.error('Bu ürün için satın alma linki henüz eklenmemiş');
         }
     };
 
@@ -168,38 +166,22 @@ export const ProductDetail = () => {
                         {getProductDescription(product, i18n.language)}
                     </p>
 
-                    {product.stock > 0 && (
-                        <div className="flex items-center gap-4 mb-6">
-                            <span className="font-medium">Adet:</span>
-                            <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                    className="p-2 rounded bg-gray-200 hover:bg-gray-300"
-                                >
-                                    <Minus className="w-4 h-4" />
-                                </button>
-                                <span className="w-12 text-center font-semibold">{quantity}</span>
-                                <button
-                                    onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                                    className="p-2 rounded bg-gray-200 hover:bg-gray-300"
-                                >
-                                    <Plus className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
                     <button
-                        onClick={handleAddToCart}
-                        disabled={product.stock === 0}
-                        className={`w-full flex items-center justify-center gap-2 py-4 rounded-lg font-semibold text-lg transition ${product.stock > 0
+                        onClick={handleBuyNow}
+                        disabled={!product.shopierLink}
+                        className={`w-full flex items-center justify-center gap-2 py-4 rounded-lg font-semibold text-lg transition ${product.shopierLink
                             ? 'bg-primary hover:bg-primary-dark text-white'
                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                             }`}
                     >
-                        <ShoppingCart className="w-6 h-6" />
-                        {product.stock > 0 ? t('products.addToCart') : t('products.outOfStock')}
+                        <ExternalLink className="w-6 h-6" />
+                        {product.shopierLink ? 'Satın Al' : 'Yakında Satışta'}
                     </button>
+                    {product.shopierLink && (
+                        <p className="text-center text-sm text-gray-500 mt-2">
+                            Shopier üzerinden güvenli ödeme
+                        </p>
+                    )}
 
                     <div className="mt-8 pt-8 border-t">
                         <p className="text-gray-600">

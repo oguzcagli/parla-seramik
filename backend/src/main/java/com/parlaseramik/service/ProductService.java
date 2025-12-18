@@ -69,6 +69,7 @@ public class ProductService {
                 .images(request.getImages())
                 .category(category)
                 .featured(request.getFeatured() != null ? request.getFeatured() : false)
+                .shopierLink(request.getShopierLink())
                 .active(true)
                 .averageRating(0.0)
                 .reviewCount(0)
@@ -96,6 +97,7 @@ public class ProductService {
         product.setImages(request.getImages());
         product.setCategory(category);
         product.setFeatured(request.getFeatured() != null ? request.getFeatured() : false);
+        product.setShopierLink(request.getShopierLink());
 
         Product updatedProduct = productRepository.save(product);
         return convertToDTO(updatedProduct);
@@ -124,6 +126,7 @@ public class ProductService {
                 .featured(product.getFeatured())
                 .averageRating(product.getAverageRating())
                 .reviewCount(product.getReviewCount())
+                .shopierLink(product.getShopierLink())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

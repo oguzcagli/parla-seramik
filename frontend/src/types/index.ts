@@ -24,6 +24,7 @@ export interface Product {
     featured: boolean;
     averageRating: number;
     reviewCount: number;
+    shopierLink?: string;
     createdAt: string;
     updatedAt: string;
 }
