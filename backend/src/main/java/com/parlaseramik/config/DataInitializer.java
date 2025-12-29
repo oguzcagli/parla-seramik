@@ -19,45 +19,64 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
-    
+
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
-    
+
     @Override
     public void run(String... args) {
-        if (userRepository.count() == 0) {
-            initializeData();
+        // Admin kullanıcısını kontrol et ve güncelle
+        ensureAdminExists();
+        
+        if (categoryRepository.count() == 0) {
+            initializeCategories();
         }
     }
     
-    private void initializeData() {
-        log.info("Initializing sample data...");
+    private void ensureAdminExists() {
+        String adminEmail = "oguzcagli@hotmail.com";
+        String adminPassword = "mN98!pSHa-*";
         
-        // Create Admin User
-        User admin = User.builder()
-                .firstName("Admin")
-                .lastName("User")
-                .email("admin@parlaseramik.com")
-                .password(passwordEncoder.encode("admin123"))
-                .role(User.Role.ADMIN)
-                .enabled(true)
-                .build();
-        userRepository.save(admin);
+        // Eski admin'i sil (varsa)
+        userRepository.findByEmail("admin@parlaseramik.com").ifPresent(user -> {
+            log.info("Removing old admin user...");
+            userRepository.delete(user);
+        });
         
-        // Create Test User
-        User user = User.builder()
-                .firstName("Test")
-                .lastName("User")
-                .email("test@parlaseramik.com")
-                .password(passwordEncoder.encode("test123"))
-                .role(User.Role.USER)
-                .enabled(true)
-                .build();
-        userRepository.save(user);
+        // Test kullanıcısını sil (varsa)
+        userRepository.findByEmail("test@parlaseramik.com").ifPresent(user -> {
+            log.info("Removing test user...");
+            userRepository.delete(user);
+        });
         
-        // Create Categories
+        // Admin varsa şifresini güncelle, yoksa oluştur
+        var existingAdmin = userRepository.findByEmail(adminEmail);
+        if (existingAdmin.isPresent()) {
+            User admin = existingAdmin.get();
+            admin.setPassword(passwordEncoder.encode(adminPassword));
+            admin.setRole(User.Role.ADMIN);
+            admin.setEnabled(true);
+            userRepository.save(admin);
+            log.info("Admin user password updated: {}", adminEmail);
+        } else {
+            log.info("Creating admin user...");
+            User admin = User.builder()
+                    .firstName("Oğuz")
+                    .lastName("Çağlı")
+                    .email(adminEmail)
+                    .password(passwordEncoder.encode(adminPassword))
+                    .role(User.Role.ADMIN)
+                    .enabled(true)
+                    .build();
+            userRepository.save(admin);
+            log.info("Admin user created: {}", adminEmail);
+        }
+    }
+    
+    private void initializeCategories() {
+        log.info("Initializing categories...");
         Category kupalar = Category.builder()
                 .nameTr("Kupalar")
                 .nameEn("Mugs")
@@ -66,7 +85,7 @@ public class DataInitializer implements CommandLineRunner {
                 .active(true)
                 .build();
         categoryRepository.save(kupalar);
-        
+
         Category tabaklar = Category.builder()
                 .nameTr("Tabaklar")
                 .nameEn("Plates")
@@ -75,7 +94,7 @@ public class DataInitializer implements CommandLineRunner {
                 .active(true)
                 .build();
         categoryRepository.save(tabaklar);
-        
+
         Category vazolar = Category.builder()
                 .nameTr("Vazolar")
                 .nameEn("Vases")
@@ -84,7 +103,7 @@ public class DataInitializer implements CommandLineRunner {
                 .active(true)
                 .build();
         categoryRepository.save(vazolar);
-        
+
         // Create Products
         Product product1 = Product.builder()
                 .nameTr("El Yapımı Seramik Kupa - Mavi")
@@ -101,7 +120,7 @@ public class DataInitializer implements CommandLineRunner {
                 .reviewCount(0)
                 .build();
         productRepository.save(product1);
-        
+
         Product product2 = Product.builder()
                 .nameTr("Dekoratif Seramik Tabak")
                 .nameEn("Decorative Ceramic Plate")
@@ -117,7 +136,7 @@ public class DataInitializer implements CommandLineRunner {
                 .reviewCount(0)
                 .build();
         productRepository.save(product2);
-        
+
         Product product3 = Product.builder()
                 .nameTr("Modern Seramik Vazo")
                 .nameEn("Modern Ceramic Vase")
@@ -133,9 +152,7 @@ public class DataInitializer implements CommandLineRunner {
                 .reviewCount(0)
                 .build();
         productRepository.save(product3);
-        
-        log.info("Sample data initialized successfully!");
-        log.info("Admin login: admin@parlaseramik.com / admin123");
-        log.info("User login: test@parlaseramik.com / test123");
+
+        log.info("Categories initialized successfully!");
     }
 }
