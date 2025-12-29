@@ -67,12 +67,13 @@
         "addToCart": "Sepete Ekle",
         "outOfStock": "Stokta Yok",
         "viewDetails": "Detayları Gör",
+        "allProducts": "Tüm Ürünler",
         "noProducts": "Ürün bulunamadı"
     },
     "about": {
         "title": "Hakkımızda",
         "story": "Hikayemiz",
-        "storyText": "Parla Seramik, 2020 yılında kurulmuş, geleneksel seramik sanatını modern tasarımla buluşturan bir markadır. Her ürünümüz, ustalarımızın yılların deneyimiyle şekillendirdiği, özenle seçilmiş malzemelerden üretilir.",
+        "storyText": "Parla Seramik, 2025 yılında kurulmuş, geleneksel seramik sanatını modern tasarımla buluşturan bir markadır. Her ürünümüz, ustalarımızın yılların deneyimiyle şekillendirdiği, özenle seçilmiş malzemelerden üretilir.",
         "mission": "Misyonumuz",
         "missionText": "Kaliteli, estetik ve fonksiyonel seramik ürünler üreterek, evlerinize ve işyerlerinize değer katmak. Her ürünümüzde sanatı ve kaliteyi bir araya getiriyoruz.",
         "values": "Değerlerimiz",

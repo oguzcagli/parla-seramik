@@ -3,27 +3,24 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { FloatingInstagram } from './components/FloatingInstagram';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Products } from './pages/Products';
 import { Contact } from './pages/Contact';
-// import { Cart } from './pages/Cart'; // Shopier entegrasyonu için gizlendi
 import { Login } from './pages/Login';
 import { Admin } from './pages/Admin';
-// import { Checkout } from './pages/Checkout'; // Shopier entegrasyonu için gizlendi
 import { ProductDetail } from './pages/ProductDetail';
-import { Profile } from './pages/Profile';
-import { Orders } from './pages/Orders';
 import { useAuthStore } from './store/authStore';
 
-const ProtectedRoute = ({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) => {
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
     const { isAuthenticated, user } = useAuthStore();
 
     if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/admin" replace />;
     }
 
-    if (adminOnly && user?.role !== 'ADMIN') {
+    if (user?.role !== 'ADMIN') {
         return <Navigate to="/" replace />;
     }
 
@@ -48,16 +45,16 @@ function App() {
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/:id" element={<ProductDetail />} />
                         <Route path="/contact" element={<Contact />} />
-                        {/* Shopier entegrasyonu için gizlendi */}
-                        {/* <Route path="/cart" element={<Cart />} /> */}
-                        {/* <Route path="/checkout" element={<Checkout />} /> */}
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-                        <Route path="/admin" element={<ProtectedRoute adminOnly><Admin /></ProtectedRoute>} />
+                        {/* Admin giriş sayfası */}
+                        <Route path="/admin" element={<Login />} />
+                        {/* Admin paneli */}
+                        <Route path="/panel" element={<AdminRoute><Admin /></AdminRoute>} />
+                        {/* Eski login URL'i ana sayfaya yönlendir */}
+                        <Route path="/login" element={<Navigate to="/" replace />} />
                     </Routes>
                 </main>
                 <Footer />
+                <FloatingInstagram />
             </div>
             <Toaster position="top-right" />
         </BrowserRouter>

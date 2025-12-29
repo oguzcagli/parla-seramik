@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, Instagram } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export const Contact = () => {
@@ -31,7 +31,9 @@ export const Contact = () => {
                             <Mail className="w-6 h-6 text-primary mr-4 mt-1" />
                             <div>
                                 <h3 className="font-semibold mb-1">{t('contact.email')}</h3>
-                                <p className="text-gray-600">info@parlaseramik.com</p>
+                                <a href="mailto:parlaseramik.nh@gmail.com" className="text-gray-600 hover:text-primary transition">
+                                    parlaseramik.nh@gmail.com
+                                </a>
                             </div>
                         </div>
 
@@ -39,15 +41,24 @@ export const Contact = () => {
                             <Phone className="w-6 h-6 text-primary mr-4 mt-1" />
                             <div>
                                 <h3 className="font-semibold mb-1">{t('contact.phone')}</h3>
-                                <p className="text-gray-600">+90 555 123 45 67</p>
+                                <a href="tel:+905443617309" className="text-gray-600 hover:text-primary transition">
+                                    +90 544 361 73 09
+                                </a>
                             </div>
                         </div>
 
                         <div className="flex items-start">
-                            <MapPin className="w-6 h-6 text-primary mr-4 mt-1" />
+                            <Instagram className="w-6 h-6 text-primary mr-4 mt-1" />
                             <div>
-                                <h3 className="font-semibold mb-1">{t('contact.address')}</h3>
-                                <p className="text-gray-600">{t('contact.addressText')}</p>
+                                <h3 className="font-semibold mb-1">Instagram</h3>
+                                <a
+                                    href="https://www.instagram.com/parla.seramik/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-600 hover:text-primary transition"
+                                >
+                                    @parla.seramik
+                                </a>
                             </div>
                         </div>
                     </div>

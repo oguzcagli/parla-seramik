@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Package, FolderTree, ShoppingBag, MessageSquare, Plus, Pencil, Trash2, X, Check, Star, Reply } from 'lucide-react';
+import { Package, FolderTree, ShoppingBag, MessageSquare, Plus, Pencil, Trash2, X, Check, Star, Reply, Upload } from 'lucide-react';
 import { productService } from '@/services/productService';
 import { categoryService } from '@/services/categoryService';
 import { orderService } from '@/services/orderService';
@@ -8,6 +8,12 @@ import { reviewService } from '@/services/reviewService';
 import { Product, Category, Order, Review, OrderStatus } from '@/types';
 import { formatPrice } from '@/utils/helpers';
 import toast from 'react-hot-toast';
+
+declare global {
+    interface Window {
+        cloudinary: any;
+    }
+}
 
 export const Admin = () => {
     const { t } = useTranslation();
@@ -24,17 +30,52 @@ export const Admin = () => {
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const [replyingReview, setReplyingReview] = useState<Review | null>(null);
     const [replyText, setReplyText] = useState('');
+    const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
     const [productForm, setProductForm] = useState({
-        nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '',
-        price: '', stock: '', categoryId: '', images: '', featured: false, shopierLink: '',
+        nameTr: '', descriptionTr: '',
+        price: '', stock: '', categoryId: '', featured: false, shopierLink: '',
     });
 
     const [categoryForm, setCategoryForm] = useState({
-        nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '',
+        nameTr: '', descriptionTr: '',
     });
 
     useEffect(() => { loadData(); }, []);
+
+    const openCloudinaryWidget = () => {
+        const widget = window.cloudinary.createUploadWidget(
+            {
+                cloudName: 'dhhodtwg3',
+                uploadPreset: 'parla_seramik',
+                sources: ['local', 'camera'],
+                multiple: true,
+                maxFiles: 10,
+                resourceType: 'image',
+                clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
+                maxFileSize: 10000000,
+                folder: 'parla-seramik/products',
+                language: 'tr',
+                text: {
+                    'tr': {
+                        'or': 'veya',
+                        'menu': { 'files': 'Dosyalarım', 'camera': 'Kamera' },
+                        'local': { 'browse': 'Dosya Seç', 'dd_title_single': 'Resmi buraya sürükleyin', 'dd_title_multi': 'Resimleri buraya sürükleyin' }
+                    }
+                }
+            },
+            (error: any, result: any) => {
+                if (!error && result && result.event === 'success') {
+                    setUploadedImages(prev => [...prev, result.info.secure_url]);
+                }
+            }
+        );
+        widget.open();
+    };
+
+    const removeImage = (index: number) => {
+        setUploadedImages(prev => prev.filter((_, i) => i !== index));
+    };
 
     const loadData = async () => {
         setLoading(true);
@@ -126,12 +167,13 @@ export const Admin = () => {
     };
 
     const resetProductForm = () => {
-        setProductForm({ nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '', price: '', stock: '', categoryId: '', images: '', featured: false, shopierLink: '' });
+        setProductForm({ nameTr: '', descriptionTr: '', price: '', stock: '', categoryId: '', featured: false, shopierLink: '' });
+        setUploadedImages([]);
         setEditingProduct(null);
     };
 
     const resetCategoryForm = () => {
-        setCategoryForm({ nameTr: '', nameEn: '', descriptionTr: '', descriptionEn: '' });
+        setCategoryForm({ nameTr: '', descriptionTr: '' });
         setEditingCategory(null);
     };
 
@@ -139,12 +181,13 @@ export const Admin = () => {
         if (product) {
             setEditingProduct(product);
             setProductForm({
-                nameTr: product.nameTr, nameEn: product.nameEn,
-                descriptionTr: product.descriptionTr || '', descriptionEn: product.descriptionEn || '',
+                nameTr: product.nameTr,
+                descriptionTr: product.descriptionTr || '',
                 price: product.price.toString(), stock: product.stock.toString(),
-                categoryId: product.categoryId?.toString() || '', images: product.images?.join(', ') || '',
+                categoryId: product.categoryId?.toString() || '',
                 featured: product.featured, shopierLink: product.shopierLink || '',
             });
+            setUploadedImages(product.images || []);
         } else { resetProductForm(); }
         setShowProductModal(true);
     };
@@ -153,8 +196,8 @@ export const Admin = () => {
         if (category) {
             setEditingCategory(category);
             setCategoryForm({
-                nameTr: category.nameTr, nameEn: category.nameEn,
-                descriptionTr: category.descriptionTr || '', descriptionEn: category.descriptionEn || '',
+                nameTr: category.nameTr,
+                descriptionTr: category.descriptionTr || '',
             });
         } else { resetCategoryForm(); }
         setShowCategoryModal(true);
@@ -162,13 +205,17 @@ export const Admin = () => {
 
     const handleProductSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (uploadedImages.length === 0) {
+            toast.error('En az bir resim eklemelisiniz');
+            return;
+        }
         try {
             const data = {
-                nameTr: productForm.nameTr, nameEn: productForm.nameEn,
-                descriptionTr: productForm.descriptionTr, descriptionEn: productForm.descriptionEn,
+                nameTr: productForm.nameTr, nameEn: productForm.nameTr,
+                descriptionTr: productForm.descriptionTr, descriptionEn: productForm.descriptionTr,
                 price: parseFloat(productForm.price), stock: parseInt(productForm.stock),
                 categoryId: parseInt(productForm.categoryId),
-                images: productForm.images.split(',').map(img => img.trim()).filter(img => img),
+                images: uploadedImages,
                 featured: productForm.featured,
                 shopierLink: productForm.shopierLink || undefined,
             };
@@ -188,11 +235,15 @@ export const Admin = () => {
     const handleCategorySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            const data = {
+                nameTr: categoryForm.nameTr, nameEn: categoryForm.nameTr,
+                descriptionTr: categoryForm.descriptionTr, descriptionEn: categoryForm.descriptionTr,
+            };
             if (editingCategory) {
-                await categoryService.update(editingCategory.id, categoryForm);
+                await categoryService.update(editingCategory.id, data);
                 toast.success('Kategori güncellendi');
             } else {
-                await categoryService.create(categoryForm);
+                await categoryService.create(data);
                 toast.success('Kategori eklendi');
             }
             setShowCategoryModal(false);
@@ -443,23 +494,13 @@ export const Admin = () => {
                             <button onClick={() => setShowProductModal(false)}><X className="w-6 h-6" /></button>
                         </div>
                         <form onSubmit={handleProductSubmit} className="p-6 space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">İsim (TR)</label>
-                                    <input type="text" value={productForm.nameTr} onChange={(e) => setProductForm({ ...productForm, nameTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" required />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">İsim (EN)</label>
-                                    <input type="text" value={productForm.nameEn} onChange={(e) => setProductForm({ ...productForm, nameEn: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" required />
-                                </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Ürün Adı</label>
+                                <input type="text" value={productForm.nameTr} onChange={(e) => setProductForm({ ...productForm, nameTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" required />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-1">Açıklama (TR)</label>
+                                <label className="block text-sm font-medium mb-1">Açıklama</label>
                                 <textarea value={productForm.descriptionTr} onChange={(e) => setProductForm({ ...productForm, descriptionTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" rows={3} />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Açıklama (EN)</label>
-                                <textarea value={productForm.descriptionEn} onChange={(e) => setProductForm({ ...productForm, descriptionEn: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" rows={3} />
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                                 <div>
@@ -479,8 +520,32 @@ export const Admin = () => {
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-1">Resim URL'leri (virgülle ayırın)</label>
-                                <input type="text" value={productForm.images} onChange={(e) => setProductForm({ ...productForm, images: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg" />
+                                <label className="block text-sm font-medium mb-1">Ürün Resimleri</label>
+                                <button
+                                    type="button"
+                                    onClick={openCloudinaryWidget}
+                                    className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-gray-50 transition"
+                                >
+                                    <Upload className="w-5 h-5" />
+                                    Resim Yükle (Birden fazla seçebilirsiniz)
+                                </button>
+                                {uploadedImages.length > 0 && (
+                                    <div className="mt-3 grid grid-cols-4 gap-2">
+                                        {uploadedImages.map((img, index) => (
+                                            <div key={index} className="relative group">
+                                                <img src={img} alt={`Ürün ${index + 1}`} className="w-full h-20 object-cover rounded-lg" />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeImage(index)}
+                                                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
+                                                >
+                                                    <X className="w-3 h-3" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                <p className="text-xs text-gray-500 mt-1">{uploadedImages.length} resim yüklendi</p>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium mb-1">Shopier Ürün Linki</label>
@@ -509,10 +574,8 @@ export const Admin = () => {
                             <button onClick={() => setShowCategoryModal(false)}><X className="w-6 h-6" /></button>
                         </div>
                         <form onSubmit={handleCategorySubmit} className="p-6 space-y-4">
-                            <div><label className="block text-sm font-medium mb-1">İsim (TR)</label><input type="text" value={categoryForm.nameTr} onChange={(e) => setCategoryForm({ ...categoryForm, nameTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" required /></div>
-                            <div><label className="block text-sm font-medium mb-1">İsim (EN)</label><input type="text" value={categoryForm.nameEn} onChange={(e) => setCategoryForm({ ...categoryForm, nameEn: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" required /></div>
-                            <div><label className="block text-sm font-medium mb-1">Açıklama (TR)</label><textarea value={categoryForm.descriptionTr} onChange={(e) => setCategoryForm({ ...categoryForm, descriptionTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" rows={2} /></div>
-                            <div><label className="block text-sm font-medium mb-1">Açıklama (EN)</label><textarea value={categoryForm.descriptionEn} onChange={(e) => setCategoryForm({ ...categoryForm, descriptionEn: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" rows={2} /></div>
+                            <div><label className="block text-sm font-medium mb-1">Kategori Adı</label><input type="text" value={categoryForm.nameTr} onChange={(e) => setCategoryForm({ ...categoryForm, nameTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" required /></div>
+                            <div><label className="block text-sm font-medium mb-1">Açıklama</label><textarea value={categoryForm.descriptionTr} onChange={(e) => setCategoryForm({ ...categoryForm, descriptionTr: e.target.value })} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary" rows={2} /></div>
                             <div className="flex gap-4 pt-4">
                                 <button type="button" onClick={() => setShowCategoryModal(false)} className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50">{t('common.cancel')}</button>
                                 <button type="submit" className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark">{t('common.save')}</button>

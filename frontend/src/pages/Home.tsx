@@ -50,10 +50,10 @@ export const Home = () => {
 
     const loadFeaturedProducts = async () => {
         try {
-            const products = await productService.getFeatured();
-            setFeaturedProducts(products.slice(0, 3));
+            const response = await productService.getAll(0, 100);
+            setFeaturedProducts(response.content || []);
         } catch (error) {
-            console.error('Error loading featured products:', error);
+            console.error('Error loading products:', error);
         } finally {
             setLoading(false);
         }
@@ -65,7 +65,7 @@ export const Home = () => {
             <section
                 ref={heroRef}
                 onMouseMove={handleMouseMove}
-                className="relative h-[600px] flex items-center justify-center overflow-hidden"
+                className="relative h-[650px] flex items-center justify-center overflow-hidden"
                 style={{
                     background: 'linear-gradient(135deg, #faf8f5 0%, #f5f0e8 50%, #ebe4d8 100%)'
                 }}
@@ -137,7 +137,7 @@ export const Home = () => {
                         to="/products"
                         className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-semibold transition"
                     >
-                        {t('products.viewDetails')}
+                        {t('products.allProducts')}
                     </Link>
                 </div>
             </section>
